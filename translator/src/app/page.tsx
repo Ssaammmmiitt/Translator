@@ -5,10 +5,16 @@ import { WavyBackground } from "@/components/ui/wavy-background";
 import "regenerator-runtime/runtime";
 import TextArea from "@/components/Inputs/TextArea"
 import SpeechRecognitionComponent from "@/components/SpeechRecognition/SpeechRecognition"
+import { IconVolume } from "@tabler/icons-react";
 
 export default function Home() {
 
 const[sourceText,setSourceText] = useState<string>("")
+
+const handleAudioPlayback = (text:string) => {
+  const utterance = new SpeechSynthesisUtterance(text);
+  window.speechSynthesis.speak(utterance);
+};
 
   return (
     <WavyBackground className="max-w-4xl mx-auto pb-40">
@@ -35,6 +41,9 @@ const[sourceText,setSourceText] = useState<string>("")
                 <div className="flex flex-row justify-between w-full p-4">
                   <span className="cursor-pointer flex space-x-2 flex-row">
                     <SpeechRecognitionComponent setSourceText={setSourceText}/>
+                    <IconVolume size={22} onClick={()=>{handleAudioPlayback(sourceText)}} />
+                    {/* File upload component */}
+                  
                   </span>
                 </div>
               </div>
