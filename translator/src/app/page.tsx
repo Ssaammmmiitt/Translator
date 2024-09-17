@@ -2,8 +2,8 @@
 
 import React, { ChangeEvent, useState } from "react";
 import { WavyBackground } from "@/components/ui/wavy-background";
-import FileUpload from "@/components/Inputs/FileUpload";
-import LinkPaste from "@/components/Inputs/LinkPaste";
+// import FileUpload from "@/components/Inputs/FileUpload";
+// import LinkPaste from "@/components/Inputs/LinkPaste";
 import Swal from "sweetalert2";
 import "regenerator-runtime/runtime";
 import LanguageSelector from "@/components/Inputs/LanguageSelector";
@@ -18,7 +18,6 @@ import {
 } from "@tabler/icons-react";
 import { rtfToText } from "@/lib/rtfToText";
 import useTranslate from "@/app/hooks/useTranslate";
-import { source } from "framer-motion/client";
 
 export default function Home() {
   const [sourceText, setSourceText] = useState<string>("");
@@ -41,22 +40,22 @@ export default function Home() {
     window.speechSynthesis.speak(utterance);
   };
 
-  const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const rtfContent = reader.result as string;
-        const text = rtfToText(rtfContent);
-        setSourceText(text);
-      };
-      reader.readAsText(file);
-    }
-  };
+  // const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files?.[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       const rtfContent = reader.result as string;
+  //       const text = rtfToText(rtfContent);
+  //       setSourceText(text);
+  //     };
+  //     reader.readAsText(file);
+  //   }
+  // };
 
-  const handleLinkPaste = (text: string) => {
-    setSourceText(text);
-  };
+  // const handleLinkPaste = (text: string) => {
+  //   setSourceText(text);
+  // };
 
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(targetText);
