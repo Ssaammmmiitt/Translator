@@ -1,6 +1,6 @@
 # Translator
 
-A simple, lightweight web application that provides real-time translation between various languages. Built using **TypeScript** and **JavaScript**, this app offers a responsive and intuitive interface for translating text quickly and efficiently.
+A simple, lightweight web application that provides real-time translation between various languages. Built using **TypeScript** and **JavaScript**, this app offers a responsive and intuitive interface for translating text quickly and efficiently with the help of **Google's Gemini API** .
 
 ## 🌟 Features
 
