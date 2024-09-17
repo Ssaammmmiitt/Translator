@@ -179,9 +179,9 @@ export const WavyBackground = ({
         ctx.filter = `blur(${blur}px)`;
         nt = 0;
         window.onresize = function () {
-          w = ctx.canvas.width = window.innerWidth;
-          h = ctx.canvas.height = window.innerHeight;
-          ctx.filter = `blur(${blur}px)`;
+          w = ctx!.canvas.width = window.innerWidth;  // Non-null assertion here
+          h = ctx!.canvas.height = window.innerHeight; // Non-null assertion here
+          ctx!.filter = `blur(${blur}px)`;  // Non-null assertion here
         };
         render();
       }
