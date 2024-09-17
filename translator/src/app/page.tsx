@@ -1,20 +1,41 @@
 "use client";
 
-import React, { ChangeEvent,useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { WavyBackground } from "@/components/ui/wavy-background";
+import FileUpload from "@/components/Inputs/FileUpload";
+import LinkPaste from "@/components/Inputs/LinkPaste";
 import "regenerator-runtime/runtime";
-import TextArea from "@/components/Inputs/TextArea"
-import SpeechRecognitionComponent from "@/components/SpeechRecognition/SpeechRecognition"
+import TextArea from "@/components/Inputs/TextArea";
+import SpeechRecognitionComponent from "@/components/SpeechRecognition/SpeechRecognition";
 import { IconVolume } from "@tabler/icons-react";
+import { rtfToText } from "@/lib/rtfToText";
+import useTranslate from "@/app/hooks/useTranslate";
 
 export default function Home() {
+  const [sourceText, setSourceText] = useState<string>("");
+  const targetText  = useTranslate(sourceText,selectedLanguage);
 
-const[sourceText,setSourceText] = useState<string>("")
+  const handleAudioPlayback = (text: string) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.speak(utterance);
+  };
 
-const handleAudioPlayback = (text:string) => {
-  const utterance = new SpeechSynthesisUtterance(text);
-  window.speechSynthesis.speak(utterance);
-};
+  const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const rtfContent = reader.result as string;
+        const text = rtfToText(rtfContent);
+        setSourceText(text);
+      };
+      reader.readAsText(file);
+    }
+  };
+
+  const handleLinkPaste = (text: string) => {
+    setSourceText(text);
+  };
 
   return (
     <WavyBackground className="max-w-4xl mx-auto pb-40">
@@ -31,22 +52,43 @@ const handleAudioPlayback = (text:string) => {
           <div className="mt-7 sm:mt-2 mx-auto max-w-3xl relative">
             <div className="grid gap-4 md:grid-cols-2 grid-cols-1">
               <div className="relative z-10 flex flex-col space-x-3 border rounded-lg shadow-lg bg-neutral-800 border-neutral-700 shadow-gray-900/20">
-                <TextArea 
-                id="source-language"
-                value={sourceText}
-                placeholder="Enter text to translate"
-                onChange={(e:ChangeEvent<HTMLTextAreaElement>)=> setSourceText(e.target.value)}
+                <TextArea
+                  id="source-language"
+                  value={sourceText}
+                  placeholder="Enter text to translate"
+                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                    setSourceText(e.target.value)
+                  }
                 />
 
-                <div className="flex flex-row justify-between w-full p-4">
+                <div className="flex flex-row justify-between w-full p-4 text-white">
                   <span className="cursor-pointer flex space-x-2 flex-row">
-                    <SpeechRecognitionComponent setSourceText={setSourceText}/>
-                    <IconVolume size={22} onClick={()=>{handleAudioPlayback(sourceText)}} />
+                    <SpeechRecognitionComponent setSourceText={setSourceText} />
+                    <IconVolume
+                      size={22}
+                      onClick={() => {
+                        handleAudioPlayback(sourceText);
+                      }}
+                    />
                     {/* File upload component */}
-                  
+
+                    <FileUpload handleFileUpload={handleFileUpload} />
+                    <LinkPaste handleLinkPaste={handleLinkPaste} />
+                  </span>
+                  <span className="pr-4 text-sm">
+                    {sourceText.length}/2000
                   </span>
                 </div>
               </div>
+
+              <div className="relative z-10 flex flex-col space-x-3 border rounded-lg shadow-lg bg-neutral-800 border-neutral-700 shadow-gray-900/20">
+               <TextArea
+               id="target-language"
+               value={targetText}
+               onChange={()=>{}}
+               placeholder="Target Langugae"
+              />
+               </div>
             </div>
           </div>
         </div>
