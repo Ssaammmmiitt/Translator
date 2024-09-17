@@ -16,7 +16,7 @@ import {
   IconThumbUp,
   IconVolume,
 } from "@tabler/icons-react";
-import { rtfToText } from "@/lib/rtfToText";
+// import { rtfToText } from "@/lib/rtfToText";
 import useTranslate from "@/app/hooks/useTranslate";
 
 export default function Home() {
