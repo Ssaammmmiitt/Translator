@@ -76,7 +76,7 @@ const useTranslate = (sourceText, selectedLanguage) => {
     if (sourceText.trim()) {
       const timeoutId = setTimeout(() => {
         handleTranslate(sourceText);
-      }, 1500); // Adjust the delay as needed
+      }, 1000); // Adjust the delay as needed
 
       return () => clearTimeout(timeoutId);
     }

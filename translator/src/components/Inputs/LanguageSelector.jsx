@@ -7,15 +7,15 @@ const LanguageSelector = ({
   languages,
 }) => {
   return (
-    <span className="cursor-pointer rounded-full space-x-1 pl-2 bg-black flex items-center flex-row">
+    <span className="cursor-pointer rounded-full space-x-1 pl-2 bg-black text-white flex items-center flex-row">
       <IconLanguage size={20} />
       <select
         value={selectedLanguage}
         onChange={(e) => setSelectedLanguage(e.target.value)}
-        className=" bg-[#000000]  flex flex-row rounded-full text-white py-1"
+        className="flex text-sm font-medium flex-row rounded-full py-1 text-green-500 bg-black border-none focus:outline-none"
       >
         {languages.map((language) => (
-          <option key={language} value={language} >
+          <option key={language} className="text-green-500" value={language} >
             {language}
           </option>
         ))}

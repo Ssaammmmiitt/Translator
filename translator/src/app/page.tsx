@@ -68,9 +68,9 @@ export default function Home() {
   };
 
   return (
-    <WavyBackground className="max-w-4xl mx-auto pb-20">
+    <WavyBackground className="max-w-4xl mx-auto ">
       {/* Centering container for the content */}
-      <div className="relative p-10 h-screen flex items-center justify-center">
+      <div className="relative p-10 h-screen flex items-center justify-center sm:pt-10">
         <div className="text-center">
           <h1 className="text-4xl md:text-5xl lg:text-7xl inter-var font-bold text-neutral-200">
             TransLator
@@ -96,14 +96,15 @@ export default function Home() {
                     <SpeechRecognitionComponent setSourceText={setSourceText} />
                     <IconVolume
                       size={22}
+                      className="hover:text-red-500 transition-colors"
                       onClick={() => {
                         handleAudioPlayback(sourceText);
                       }}
                     />
                     {/* File upload component */}
-
+                    {/* 
                     <FileUpload handleFileUpload={handleFileUpload} />
-                    <LinkPaste handleLinkPaste={handleLinkPaste} />
+                    <LinkPaste handleLinkPaste={handleLinkPaste} /> */}
                   </span>
                   <span className="pr-4 text-sm">{sourceText.length}/2000</span>
                 </div>
@@ -112,11 +113,11 @@ export default function Home() {
               <div className="relative p-3 z-10 flex flex-col space-x-3 border rounded-lg shadow-lg bg-neutral-800 border-neutral-700 shadow-gray-900/20">
                 <TextArea
                   id="target-language"
-                  value={targetText}
+                  value={sourceText.length>0?targetText:""}
                   onChange={() => {}}
-                  placeholder="Target Language"
+                  placeholder={`Target Language: ${selectedLanguage}`}
                 />
-                <div className="flex flex-row justify-between w-full">
+                <div className="flex flex-row justify-between w-full py-4">
                   <span className="cursor-pointer flex items-center space-x-2 flex-row">
                     <LanguageSelector
                       selectedLanguage={selectedLanguage}
@@ -124,6 +125,7 @@ export default function Home() {
                       languages={languages}
                     />
                     <IconVolume
+                      className="hover:text-red-500 text-white transition-colors"
                       size={22}
                       onClick={() => {
                         handleAudioPlayback(targetText);
@@ -132,6 +134,7 @@ export default function Home() {
                   </span>
                   <div className="flex flex-row items-center space-x-2 pr-4 cursor-pointer">
                     <IconCopy
+                      className="hover:text-yellow-500 text-white transition-colors"
                       size={22}
                       onClick={() => {
                         handleCopyToClipboard;
@@ -140,14 +143,21 @@ export default function Home() {
                     {copied && (
                       <span className="text-sm text-green-500">Copied!</span>
                     )}
-                    <IconThumbUp size={22} onClick={() => {}} />
-                    <IconThumbDown size={22} />
+                    <IconThumbUp
+                      size={22}
+                      onClick={() => {}}
+                      className="cursor-pointer hover:text-green-500 text-white transition-colors"
+                    />
+                    <IconThumbDown
+                      size={22}
+                      className="hover:text-red-500 text-white transition-colors"
+                    />
                     <IconStar
                       size={22}
                       onClick={() => {
                         handleFavourite;
                       }}
-                      className={favourite ? "text-yellow-500" : ""}
+                      className={favourite ? "text-yellow-500" : "text-white"}
                     />
                   </div>
                 </div>
