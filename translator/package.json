@@ -23,6 +23,7 @@
     "react-speech-recognition": "^3.10.0",
     "regenerator-runtime": "^0.14.1",
     "simplex-noise": "^4.0.3",
+    "sweetalert2": "^11.14.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7"
   },

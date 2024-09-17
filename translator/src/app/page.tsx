@@ -4,6 +4,7 @@ import React, { ChangeEvent, useState } from "react";
 import { WavyBackground } from "@/components/ui/wavy-background";
 import FileUpload from "@/components/Inputs/FileUpload";
 import LinkPaste from "@/components/Inputs/LinkPaste";
+import Swal from "sweetalert2";
 import "regenerator-runtime/runtime";
 import LanguageSelector from "@/components/Inputs/LanguageSelector";
 import TextArea from "@/components/Inputs/TextArea";
@@ -23,6 +24,8 @@ export default function Home() {
   const [sourceText, setSourceText] = useState<string>("");
   const [copied, setCopied] = useState<boolean>(false);
   const [favourite, setFavourite] = useState<boolean>(false);
+  const [liked, setLiked] = useState<boolean>(false);
+  const [disliked, setDisliked] = useState<boolean>(false);
   const [languages] = useState<string[]>([
     "English",
     "Spanish",
@@ -60,14 +63,23 @@ export default function Home() {
     setCopied(true);
     setTimeout(() => {
       setCopied(false);
-    }, 2000);
+    }, 10000);
   };
 
   const handleFavourite = () => {
     setFavourite(!favourite);
   };
 
+  const handleLike = () => {
+    setLiked(!liked);
+  };
+
+  const handleDislike = () => {
+    setDisliked(!disliked);
+  };
+
   return (
+    // Wavy background component
     <WavyBackground className="max-w-4xl mx-auto ">
       {/* Centering container for the content */}
       <div className="relative p-10 h-screen flex items-center justify-center sm:pt-10">
@@ -113,7 +125,7 @@ export default function Home() {
               <div className="relative p-3 z-10 flex flex-col space-x-3 border rounded-lg shadow-lg bg-neutral-800 border-neutral-700 shadow-gray-900/20">
                 <TextArea
                   id="target-language"
-                  value={sourceText.length>0?targetText:""}
+                  value={sourceText.length > 0 ? targetText : ""}
                   onChange={() => {}}
                   placeholder={`Target Language: ${selectedLanguage}`}
                 />
@@ -137,7 +149,16 @@ export default function Home() {
                       className="hover:text-yellow-500 text-white transition-colors"
                       size={22}
                       onClick={() => {
-                        handleCopyToClipboard;
+                        if(targetText.length > 0){
+                        handleCopyToClipboard();
+                        Swal.fire({
+                          title: "Copied!",
+                          text: "Text copied to clipboard",
+                          icon: "success",
+                          showConfirmButton: false,
+                          timer: 1500,
+                        });
+                      }
                       }}
                     />
                     {copied && (
@@ -145,17 +166,19 @@ export default function Home() {
                     )}
                     <IconThumbUp
                       size={22}
-                      onClick={() => {}}
-                      className="cursor-pointer hover:text-green-500 text-white transition-colors"
+                      onClick={() => {handleLike();}}
+                      className={liked? "cursor-pointer text-green-600 transition-colors":"cursor-pointer hover:text-green-500 text-white transition-colors"}
                     />
                     <IconThumbDown
                       size={22}
-                      className="hover:text-red-500 text-white transition-colors"
+                      onClick = {() => {handleDislike();}}
+
+                      className={disliked? "text-red-500":"hover:text-red-500 text-white transition-colors"}
                     />
                     <IconStar
                       size={22}
                       onClick={() => {
-                        handleFavourite;
+                        handleFavourite();
                       }}
                       className={favourite ? "text-yellow-500" : "text-white"}
                     />
